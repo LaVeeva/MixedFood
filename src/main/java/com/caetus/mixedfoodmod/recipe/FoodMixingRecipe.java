@@ -103,7 +103,7 @@ public class FoodMixingRecipe implements Recipe<net.minecraft.world.inventory.Cr
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
+    public NonNullList<ItemStack> getRemainingItems(@javax.annotation.Nonnull CraftingContainer inv) {
         NonNullList<ItemStack> remains = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack stack = inv.getItem(i);
