@@ -25,7 +25,7 @@ public class FoodMixingRecipe implements Recipe<net.minecraft.world.inventory.Cr
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level world) {
+    public boolean matches(@javax.annotation.Nonnull CraftingContainer inv, @javax.annotation.Nonnull Level world) {
         boolean foundBowl = false;
         int foodCount = 0;
         for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -44,7 +44,7 @@ public class FoodMixingRecipe implements Recipe<net.minecraft.world.inventory.Cr
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, net.minecraft.core.RegistryAccess access) {
+    public ItemStack assemble(@javax.annotation.Nonnull CraftingContainer inv, @javax.annotation.Nonnull net.minecraft.core.RegistryAccess access) {
         int totalHunger = 0;
         float totalSaturation = 0f;
         ListTag listTag = new ListTag();
@@ -83,7 +83,7 @@ public class FoodMixingRecipe implements Recipe<net.minecraft.world.inventory.Cr
     }
 
     @Override
-    public ItemStack getResultItem(net.minecraft.core.RegistryAccess access) {
+    public ItemStack getResultItem(@javax.annotation.Nonnull net.minecraft.core.RegistryAccess access) {
         return new ItemStack(ModItems.MIXED_FOOD.get());
     }
 

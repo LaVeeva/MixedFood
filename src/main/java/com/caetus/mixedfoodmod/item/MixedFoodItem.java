@@ -35,7 +35,7 @@ public class MixedFoodItem extends Item {
     }
 
     @Override
-    public Component getName(ItemStack stack) {
+    public Component getName(@javax.annotation.Nonnull ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_LIST)) {
             ListTag ingredients = stack.getTag().getList(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_COMPOUND);
             StringBuilder sb = new StringBuilder();
@@ -58,15 +58,14 @@ public class MixedFoodItem extends Item {
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+    public ItemStack finishUsingItem(@javax.annotation.Nonnull ItemStack stack, @javax.annotation.Nonnull Level level, @javax.annotation.Nonnull LivingEntity entity) {
         if (!(entity instanceof Player player) || !stack.hasTag()) {
             return super.finishUsingItem(stack, level, entity);
         }
 
         CompoundTag tag = stack.getTag();
-        if (tag.contains(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_LIST)) {
+        if (tag != null && tag.contains(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_LIST)) {
             ListTag ingredients = tag.getList(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_COMPOUND);
-
             for (int i = 0; i < ingredients.size(); i++) {
                 CompoundTag ingTag = ingredients.getCompound(i);
                 String id = ingTag.getString(NBTKeys.TAG_INGREDIENT_ID);
@@ -93,14 +92,14 @@ public class MixedFoodItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(@javax.annotation.Nonnull ItemStack stack, @Nullable Level level, @javax.annotation.Nonnull List<Component> tooltip, @javax.annotation.Nonnull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
 
         if (stack.hasTag() && stack.getTag().contains(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_LIST)) {
             CompoundTag tag = stack.getTag();
-            ListTag ingredientsNBT = tag.getList(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_COMPOUND);
-            List<String> ingredientDisplayNames = new ArrayList<>();
-
+            if (tag != null) {
+                ListTag ingredientsNBT = tag.getList(NBTKeys.TAG_INGREDIENTS_LIST, Tag.TAG_COMPOUND);
+                List<String> ingredientDisplayNames = new ArrayList<>();
             for (Tag ingTagElement : ingredientsNBT) {
                 if (ingTagElement.getId() == Tag.TAG_COMPOUND) { 
                     CompoundTag ingCompound = (CompoundTag) ingTagElement;
@@ -122,11 +121,12 @@ public class MixedFoodItem extends Item {
             float saturation = tag.getFloat(NBTKeys.TAG_TOTAL_SATURATION);
             tooltip.add(Component.translatable("tooltip.mixedfoodmod.hunger", hunger).withStyle(ChatFormatting.GREEN));
             tooltip.add(Component.translatable("tooltip.mixedfoodmod.saturation", String.format("%.2f", saturation)).withStyle(ChatFormatting.AQUA));
+            }
         }
     }
 
     @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+    public void initializeClient(@javax.annotation.Nonnull Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private MixedFoodBEWLR renderer;
 

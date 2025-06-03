@@ -7,16 +7,16 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class FoodMixingRecipeSerializer implements RecipeSerializer<FoodMixingRecipe> {
     @Override
-    public FoodMixingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public FoodMixingRecipe fromJson(@javax.annotation.Nonnull ResourceLocation recipeId, @javax.annotation.Nonnull JsonObject json) {
         return new FoodMixingRecipe(recipeId);
     }
 
     @Override
-    public FoodMixingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public FoodMixingRecipe fromNetwork(@javax.annotation.Nonnull ResourceLocation recipeId, @javax.annotation.Nonnull FriendlyByteBuf buffer) {
         return new FoodMixingRecipe(recipeId);
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, FoodMixingRecipe recipe) {}
+    public void toNetwork(@javax.annotation.Nonnull FriendlyByteBuf buffer, @javax.annotation.Nonnull FoodMixingRecipe recipe) {}
     
 }

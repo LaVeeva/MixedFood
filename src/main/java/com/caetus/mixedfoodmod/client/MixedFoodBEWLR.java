@@ -26,7 +26,7 @@ public class MixedFoodBEWLR extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void renderByItem(@javax.annotation.Nonnull ItemStack stack, @javax.annotation.Nonnull ItemDisplayContext displayContext, @javax.annotation.Nonnull PoseStack poseStack, @javax.annotation.Nonnull MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         BakedModel baseModel = itemRenderer.getModel(stack, null, null, 0);
 
