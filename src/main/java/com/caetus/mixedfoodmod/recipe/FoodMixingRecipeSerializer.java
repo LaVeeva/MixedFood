@@ -17,7 +17,6 @@ public class FoodMixingRecipeSerializer implements RecipeSerializer<FoodMixingRe
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buffer, FoodMixingRecipe recipe) {
-        // No extra data needed
-    }
+    public void toNetwork(FriendlyByteBuf buffer, FoodMixingRecipe recipe) {}
+    
 }

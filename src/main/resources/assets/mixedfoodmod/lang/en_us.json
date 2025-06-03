@@ -1,3 +1,7 @@
 {
-  "item.mixedfoodmod.mixed_food": "Mixed Food"
+  "item.mixedfoodmod.mixed_food": "Mixed Food",
+  "tooltip.mixedfoodmod.ingredients": "Ingredients: %s",
+  "tooltip.mixedfoodmod.hunger": "Hunger: %s",
+  "tooltip.mixedfoodmod.saturation": "Saturation: %s",
+  "tooltip.mixedfoodmod.unknown_item": "Unknown Item"
 }

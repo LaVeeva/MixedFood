@@ -9,20 +9,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.CraftingContainer;  
-import net.minecraft.world.item.crafting.Recipe;  
-import net.minecraft.world.item.crafting.RecipeSerializer;  
-import net.minecraft.world.item.crafting.RecipeType;  
-import net.minecraft.world.level.Level;  
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;  
-import java.util.Collections;  
-import java.util.List;
-
-public class FoodMixingRecipe implements Recipe<CraftingContainer> {
+public class FoodMixingRecipe implements Recipe<net.minecraft.world.inventory.CraftingContainer> {
     private final ResourceLocation id;
 
     public FoodMixingRecipe(ResourceLocation id) {
@@ -52,7 +47,6 @@ public class FoodMixingRecipe implements Recipe<CraftingContainer> {
     public ItemStack assemble(CraftingContainer inv, net.minecraft.core.RegistryAccess access) {
         int totalHunger = 0;
         float totalSaturation = 0f;
-        List<String> ingredientNames = new ArrayList<>();
         ListTag listTag = new ListTag();
 
         for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -60,12 +54,13 @@ public class FoodMixingRecipe implements Recipe<CraftingContainer> {
             if (stack.isEmpty() || stack.getItem() == Items.BOWL) continue;
             if (stack.isEdible()) {
                 FoodProperties fp = stack.getFoodProperties((LivingEntity) null);
-                int hunger = fp.getNutrition();
-                float sat = fp.getSaturationModifier() * hunger;
-                totalHunger += hunger;
-                totalSaturation += sat;
+                if (fp != null) {
+                    int hunger = fp.getNutrition();
+                    float sat = fp.getSaturationModifier() * hunger;
+                    totalHunger += hunger;
+                    totalSaturation += sat;
+                }
                 String key = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-                ingredientNames.add(key);
 
                 CompoundTag entry = new CompoundTag();
                 entry.putString("id", key);
@@ -73,12 +68,10 @@ public class FoodMixingRecipe implements Recipe<CraftingContainer> {
             }
         }
 
-        Collections.sort(ingredientNames);
         ItemStack result = new ItemStack(ModItems.MIXED_FOOD.get());
         CompoundTag tag = new CompoundTag();
         tag.putInt("totalHunger", totalHunger);
         tag.putFloat("totalSaturation", totalSaturation);
-        tag.putString("ingredients", String.join(",", ingredientNames));
         tag.put("Ingredients", listTag);
         result.setTag(tag);
         return result;
